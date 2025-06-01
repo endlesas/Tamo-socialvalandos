@@ -1,41 +1,68 @@
 <!DOCTYPE html>
 <html lang="lt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TAMO Socialinės Valandos</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TAMO Socialinės valandos</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>TAMO Socialinės valandos</h1>
+  <div class="container">
+    <h1>TAMO Socialinės valandos</h1>
 
-  <div id="login">
-    <h2>Prisijungimas</h2>
-    <input type="text" id="username" placeholder="Vartotojo vardas">
-    <input type="password" id="password" placeholder="Slaptažodis">
-    <button onclick="login()">Prisijungti</button>
-    <p id="loginStatus"></p>
+    <div id="login">
+      <h2>Prisijungimas</h2>
+      <input type="text" id="username" placeholder="Vartotojo vardas" />
+      <input type="password" id="password" placeholder="Slaptažodis" />
+      <button onclick="login()">Prisijungti</button>
+      <p id="loginStatus" class="error"></p>
+    </div>
+
+    <div id="userPanel" class="hidden">
+      <h2>Mokinio zona</h2>
+      <div class="summary">
+        <p><strong>Patvirtintos valandos:</strong> <span id="approvedHours">0</span></p>
+        <p><strong>Reikalingos valandos:</strong> <span id="pendingHours">0</span></p>
+      </div>
+
+      <h3>Darbų sąrašas</h3>
+      <table id="jobsTable">
+        <thead>
+          <tr>
+            <th>Darbas</th>
+            <th>Valandos</th>
+            <th>Statusas</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <h3>Pridėti naują darbą</h3>
+      <form id="jobForm">
+        <input type="text" id="jobName" placeholder="Darbo pavadinimas" required />
+        <input type="number" id="hours" placeholder="Valandų skaičius" required min="0.1" step="0.1" />
+        <button type="submit">Pateikti patvirtinimui</button>
+      </form>
+      <button onclick="logout()">Atsijungti</button>
+    </div>
+
+    <div id="adminPanel" class="hidden">
+      <h2>Administratoriaus zona</h2>
+      <h3>Laukiantys patvirtinimo darbai</h3>
+      <table id="pendingTable">
+        <thead>
+          <tr>
+            <th>Darbas</th>
+            <th>Valandos</th>
+            <th>Veiksmas</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button onclick="logout()">Atsijungti</button>
+    </div>
   </div>
 
-  <div id="adminPanel" class="hidden">
-    <h2>Administratoriaus zona</h2>
-    <h3>Nepatvirtinti darbai</h3>
-    <table id="pendingTable"></table>
-  </div>
-
-  <div id="userPanel" class="hidden">
-    <h2>Mokinio zona</h2>
-    <form onsubmit="submitJob(event)">
-      <input type="text" id="jobName" placeholder="Darbo pavadinimas" required>
-      <input type="number" id="hours" placeholder="Valandos" required>
-      <button type="submit">Pateikti darbą</button>
-    </form>
-    <h3>Patvirtinti darbai</h3>
-    <table id="approvedTable"></table>
-  </div>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
