@@ -1,58 +1,90 @@
-const users = {
-  mokinys: 'mokinys123',
-  admin: 'tamo123'
-};
-
-let jobs = [];
-
-// Įkeliam darbų sąrašą iš localStorage
-function loadJobs() {
-  const saved = localStorage.getItem('jobs');
-  if (saved) {
-    jobs = JSON.parse(saved);
-  }
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f7fc;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-// Išsaugom darbų sąrašą į localStorage
-function saveJobs() {
-  localStorage.setItem('jobs', JSON.stringify(jobs));
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
 }
 
-function login() {
-  const user = document.getElementById('username').value;
-  const pass = document.getElementById('password').value;
-
-  if (users[user] && users[user] === pass) {
-    document.getElementById('login').classList.add('hidden');
-    document.getElementById('loginStatus').textContent = '';
-    loadJobs(); // užkraunam darbus
-
-    if (user === 'admin') {
-      document.getElementById('adminPanel').classList.remove('hidden');
-      renderPendingJobs();
-    } else {
-      document.getElementById('userPanel').classList.remove('hidden');
-      renderApprovedJobs();
-    }
-  } else {
-    document.getElementById('loginStatus').textContent = 'Neteisingas prisijungimas';
-  }
+h1 {
+  color: #0078d7;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-function submitJob(event) {
-  event.preventDefault();
-  const jobName = document.getElementById('jobName').value;
-  const hours = document.getElementById('hours').value;
-  jobs.push({ jobName, hours, approved: false });
-  saveJobs(); // išsaugom naują darbą
-  alert('Darbas pateiktas patvirtinimui!');
-  document.getElementById('jobName').value = '';
-  document.getElementById('hours').value = '';
+h2 {
+  color: #005a9e;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #0078d7;
+  padding-bottom: 5px;
 }
 
-function renderPendingJobs() {
-  const table = document.getElementById('pendingTable');
-  table.innerHTML = '<tr><th>Darbas</th><th>Valandos</th><th>Veiksmas</th></tr>';
-  jobs.forEach((job, index) => {
-    if (!job.approved) {
-      table.innerHTML += `<tr><td>${job.jobName}</td><td>${job.hours}</td><td><button onclick="a
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+  width: calc(100% - 20px);
+  padding: 8px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #0078d7;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #005a9e;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table th {
+  background-color: #0078d7;
+  color: white;
+}
+
+.summary p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.error {
+  color: red;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
