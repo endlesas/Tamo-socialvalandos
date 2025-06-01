@@ -69,6 +69,7 @@ function renderUserJobs() {
 
       const tdStatus = document.createElement('td');
       tdStatus.textContent = job.approved ? 'Patvirtintas' : 'Laukia patvirtinimo';
+      tdStatus.className = job.approved ? 'status-approved' : 'status-pending';
       tr.appendChild(tdStatus);
 
       tbody.appendChild(tr);
@@ -81,105 +82,5 @@ function renderUserJobs() {
     }
   });
 
-  document.getElementById('approvedHours').textContent = approvedHours.toFixed(1);
-  document.getElementById('pendingHours').textContent = pendingHours.toFixed(1);
-}
-
-document.getElementById('jobForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const jobName = document.getElementById('jobName').value.trim();
-  const hours = parseFloat(document.getElementById('hours').value);
-
-  if (!jobName || isNaN(hours) || hours <= 0) {
-    alert('Įveskite tinkamus duomenis');
-    return;
-  }
-
-  jobs.push({
-    user: currentUser,
-    jobName,
-    hours,
-    approved: false
-  });
-
-  saveJobs();
-  renderUserJobs();
-
-  document.getElementById('jobName').value = '';
-  document.getElementById('hours').value = '';
-  alert('Darbas pateiktas patvirtinimui!');
-});
-
-function renderPendingJobs() {
-  const tbody = document.querySelector('#pendingTable tbody');
-  tbody.innerHTML = '';
-
-  jobs.forEach((job, index) => {
-    if (!job.approved) {
-      const tr = document.createElement('tr');
-
-      const tdName = document.createElement('td');
-      tdName.textContent = job.jobName;
-      tr.appendChild(tdName);
-
-      const tdHours = document.createElement('td');
-      tdHours.textContent = job.hours;
-      tr.appendChild(tdHours);
-
-      const tdAction = document.createElement('td');
-      const btn = document.createElement('button');
-      btn.textContent = 'Patvirtinti';
-      btn.onclick = () => approveJob(index);
-      tdAction.appendChild(btn);
-      tr.appendChild(tdAction);
-
-      tbody.appendChild(tr);
-    }
-  });
-}
-
-function approveJob(index) {
-  jobs[index].approved = true;
-  saveJobs();
-  renderPendingJobs();
-}
-
-
-
-button:hover {
-  background-color: #005a9e;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
-
-table th,
-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-
-table th {
-  background-color: #0078d7;
-  color: white;
-}
-
-.summary p {
-  font-size: 16px;
-  margin: 5px 0;
-}
-
-.error {
-  color: red;
-  margin-top: -10px;
-  margin-bottom: 10px;
-}
-
-.hidden {
-  display: none;
-}
+  document.getElementBy
 
