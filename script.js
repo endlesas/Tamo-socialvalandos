@@ -82,5 +82,56 @@ function renderUserJobs() {
     }
   });
 
-  document.getElementBy
+  document.getElementById('approvedHours').textContent = approvedHours.toFixed(1);
+  document.getElementById('pendingHours').textContent = pendingHours.toFixed(1);
+}
 
+document.getElementById('jobForm').addEventListener('submit', e => {
+  e.preventDefault();
+
+  const jobName = document.getElementById('jobName').value.trim();
+  const hours = parseFloat(document.getElementById('hours').value);
+
+  if (!jobName || isNaN(hours) || hours <= 0) {
+    alert('Įveskite teisingus duomenis');
+    return;
+  }
+
+  jobs.push({ user: currentUser, jobName, hours, approved: false });
+  saveJobs();
+  renderUserJobs();
+
+  document.getElementById('jobForm').reset();
+});
+
+function renderPendingJobs() {
+  const tbody = document.querySelector('#pendingTable tbody');
+  tbody.innerHTML = '';
+
+  jobs.forEach((job, idx) => {
+    if (!job.approved) {
+      const tr = document.createElement('tr');
+
+      const tdName = document.createElement('td');
+      tdName.textContent = job.jobName;
+      tr.appendChild(tdName);
+
+      const tdHours = document.createElement('td');
+      tdHours.textContent = job.hours;
+      tr.appendChild(tdHours);
+
+      const tdAction = document.createElement('td');
+      const btnApprove = document.createElement('button');
+      btnApprove.textContent = 'Patvirtinti';
+      btnApprove.onclick = () => {
+        jobs[idx].approved = true;
+        saveJobs();
+        renderPendingJobs();
+      };
+      tdAction.appendChild(btnApprove);
+      tr.appendChild(tdAction);
+
+      tbody.appendChild(tr);
+    }
+  });
+}
