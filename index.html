@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAMO Socialinės Valandos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>TAMO Socialinės valandos</h1>
+
+  <div id="login">
+    <h2>Prisijungimas</h2>
+    <input type="text" id="username" placeholder="Vartotojo vardas">
+    <input type="password" id="password" placeholder="Slaptažodis">
+    <button onclick="login()">Prisijungti</button>
+    <p id="loginStatus"></p>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <h2>Administratoriaus zona</h2>
+    <h3>Nepatvirtinti darbai</h3>
+    <table id="pendingTable"></table>
+  </div>
+
+  <div id="userPanel" class="hidden">
+    <h2>Mokinio zona</h2>
+    <form onsubmit="submitJob(event)">
+      <input type="text" id="jobName" placeholder="Darbo pavadinimas" required>
+      <input type="number" id="hours" placeholder="Valandos" required>
+      <button type="submit">Pateikti darbą</button>
+    </form>
+    <h3>Patvirtinti darbai</h3>
+    <table id="approvedTable"></table>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
